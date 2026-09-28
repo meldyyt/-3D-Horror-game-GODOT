@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="LoopData" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/events/loop_data.gd" id="1_script"]
+[ext_resource type="AudioStream" path="res://assets/audio/ambient/haunting.ogg" id="2_amb"]
+[ext_resource type="AudioStream" path="res://assets/audio/impacts/metal_hit.ogg" id="3_cue"]
+
+[resource]
+script = ExtResource("1_script")
+loop_number = 5
+loop_title = "Силуэт"
+notification_text = "В конце коридора кто-то стоит..."
+ambient_stream = ExtResource("2_amb")
+ambient_volume_db = -6.0
+sound_cue = ExtResource("3_cue")
+light_energy_multiplier = 0.25
+fog_density = 0.08
+fog_color = Color(0.03, 0.03, 0.04, 1)
+show_groups = ["loop_silhouette", "loop_haunted_objects", "loop_stalker"]
+hide_groups = ["loop_weeping_audio"]
+open_door_names = []
+close_door_names = []
+lock_door_names = ["Door47"]
+custom_event_id = "event_silhouette"

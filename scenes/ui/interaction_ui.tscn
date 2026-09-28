@@ -1,0 +1,165 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/interaction_ui.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stamina_bg"]
+bg_color = Color(0.05, 0.05, 0.06, 0.5)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stamina_fill"]
+bg_color = Color(0.88, 0.9, 0.95, 0.85)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bat_bg"]
+bg_color = Color(0.05, 0.05, 0.06, 0.5)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.25, 0.25, 0.25, 0.6)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bat_fill"]
+bg_color = Color(0.95, 0.82, 0.35, 0.85)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[node name="InteractionUI" type="CanvasLayer"]
+script = ExtResource("1_script")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Crosshair" type="ColorRect" parent="CenterContainer"]
+custom_minimum_size = Vector2(4, 4)
+layout_mode = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0.7)
+
+[node name="PromptLabel" type="Label" parent="."]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 24.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.85)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NotificationLabel" type="Label" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 50.0
+offset_bottom = 90.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.35, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HUDContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="StaminaContainer" type="MarginContainer" parent="HUDContainer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -90.0
+offset_top = -36.0
+offset_right = 90.0
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="StaminaBar" type="ProgressBar" parent="HUDContainer/StaminaContainer"]
+custom_minimum_size = Vector2(180, 6)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_stamina_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_stamina_fill")
+max_value = 100.0
+value = 100.0
+show_percentage = false
+
+[node name="BatteryContainer" type="MarginContainer" parent="HUDContainer"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -170.0
+offset_top = -42.0
+offset_right = -20.0
+offset_bottom = -22.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="HBox" type="HBoxContainer" parent="HUDContainer/BatteryContainer"]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 2
+
+[node name="BatteryLabel" type="Label" parent="HUDContainer/BatteryContainer/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 0.7)
+theme_override_font_sizes/font_size = 11
+text = "ЗАРЯД"
+vertical_alignment = 1
+
+[node name="BatteryBar" type="ProgressBar" parent="HUDContainer/BatteryContainer/HBox"]
+custom_minimum_size = Vector2(70, 8)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_bat_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bat_fill")
+max_value = 100.0
+value = 100.0
+show_percentage = false
+
+[node name="BatteryPercent" type="Label" parent="HUDContainer/BatteryContainer/HBox"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 0.8)
+theme_override_font_sizes/font_size = 11
+text = "100%"
+vertical_alignment = 1

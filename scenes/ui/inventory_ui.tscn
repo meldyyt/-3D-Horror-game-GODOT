@@ -1,0 +1,167 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/inventory_ui.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.04, 0.04, 0.04, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.35, 0.28, 0.18, 0.85)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.8)
+shadow_size = 12
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_sep"]
+color = Color(0.35, 0.28, 0.18, 0.6)
+grow_begin = 4.0
+grow_end = 4.0
+thickness = 2
+vertical = true
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_h"]
+color = Color(0.35, 0.28, 0.18, 0.6)
+grow_begin = 4.0
+grow_end = 4.0
+thickness = 1
+
+[node name="InventoryUI" type="CanvasLayer"]
+layer = 50
+script = ExtResource("1_script")
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DimBackdrop" type="ColorRect" parent="Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.02, 0.02, 0.75)
+
+[node name="TitleLabel" type="Label" parent="Root"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 40.0
+offset_right = 200.0
+offset_bottom = 80.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.88, 0.72, 0.42, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 26
+text = "ИНВЕНТАРЬ"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="Root"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -380.0
+offset_top = -220.0
+offset_right = 380.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="MarginContainer" type="MarginContainer" parent="Root/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Root/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="LeftBox" type="VBoxContainer" parent="Root/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="GridContainer" type="GridContainer" parent="Root/PanelContainer/MarginContainer/HBoxContainer/LeftBox"]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 4
+
+[node name="VSeparator" type="VSeparator" parent="Root/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_sep")
+
+[node name="RightBox" type="VBoxContainer" parent="Root/PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ItemIcon" type="TextureRect" parent="Root/PanelContainer/MarginContainer/HBoxContainer/RightBox"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ItemName" type="Label" parent="Root/PanelContainer/MarginContainer/HBoxContainer/RightBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.85, 0.6, 1)
+theme_override_font_sizes/font_size = 18
+text = "Выберите предмет"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="ItemType" type="Label" parent="Root/PanelContainer/MarginContainer/HBoxContainer/RightBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.6, 0.5, 1)
+theme_override_font_sizes/font_size = 13
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Root/PanelContainer/MarginContainer/HBoxContainer/RightBox"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_h")
+
+[node name="ItemDesc" type="Label" parent="Root/PanelContainer/MarginContainer/HBoxContainer/RightBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.85, 0.82, 0.78, 1)
+theme_override_font_sizes/font_size = 14
+text = "Наведите курсор или кликните по предмету в сетке инвентаря."
+autowrap_mode = 3
+
+[node name="FooterLabel" type="Label" parent="Root"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -60.0
+offset_right = 250.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.6, 0.55, 0.5, 0.8)
+theme_override_font_sizes/font_size = 14
+text = "[TAB] или [I] — Закрыть инвентарь  |  [ESC] — Выход"
+horizontal_alignment = 1
+vertical_alignment = 1

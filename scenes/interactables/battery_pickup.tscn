@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/interaction/battery_pickup.gd" id="1_bat"]
+[ext_resource type="AudioStream" path="res://assets/audio/battery_pickup.wav" id="2_snd"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_bat"]
+height = 0.2
+radius = 0.08
+
+[sub_resource type="StandardMaterial3D" id="Mat_BatteryBody"]
+albedo_color = Color(0.1, 0.12, 0.1, 1)
+metallic = 0.8
+roughness = 0.3
+
+[sub_resource type="StandardMaterial3D" id="Mat_BatteryBand"]
+albedo_color = Color(0.15, 0.65, 0.25, 1)
+emission_enabled = true
+emission = Color(0.1, 0.5, 0.2, 1)
+emission_energy_multiplier = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_main"]
+material = SubResource("Mat_BatteryBody")
+top_radius = 0.03
+bottom_radius = 0.03
+height = 0.1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_band"]
+material = SubResource("Mat_BatteryBand")
+top_radius = 0.031
+bottom_radius = 0.031
+height = 0.04
+
+[node name="BatteryPickup" type="StaticBody3D" groups=["battery_pickup"]]
+collision_layer = 1
+collision_mask = 0
+script = ExtResource("1_bat")
+pickup_sound = ExtResource("2_snd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_bat")
+
+[node name="MeshContainer" type="Node3D" parent="."]
+
+[node name="Body" type="MeshInstance3D" parent="MeshContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+mesh = SubResource("CylinderMesh_main")
+
+[node name="Band" type="MeshInstance3D" parent="MeshContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+mesh = SubResource("CylinderMesh_band")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="MeshContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
+light_color = Color(0.3, 0.85, 0.4, 1)
+light_energy = 0.35
+omni_range = 1.0
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+bus = &"SFX"

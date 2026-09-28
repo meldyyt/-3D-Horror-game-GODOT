@@ -1,0 +1,560 @@
+[gd_scene load_steps=46 format=3]
+
+[ext_resource type="Script" path="res://scripts/levels/test_level.gd" id="1_level"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/interactables/door.tscn" id="3_door"]
+[ext_resource type="PackedScene" path="res://scenes/interactables/key_pickup.tscn" id="4_pickup"]
+[ext_resource type="Resource" path="res://resources/items/key_apartment_47.tres" id="5_key_res"]
+[ext_resource type="PackedScene" path="res://scenes/interactables/note_item.tscn" id="6_note"]
+[ext_resource type="Script" path="res://scripts/levels/flickering_light.gd" id="7_flicker"]
+[ext_resource type="AudioStream" path="res://assets/audio/light_buzz_loop.wav" id="8_buzz_audio"]
+[ext_resource type="PackedScene" path="res://assets/models/furniture/drawer_desk.glb" id="9_desk"]
+[ext_resource type="PackedScene" path="res://assets/models/furniture/chair.glb" id="10_chair"]
+[ext_resource type="PackedScene" path="res://assets/models/furniture/cabinet.glb" id="11_cabinet"]
+[ext_resource type="PackedScene" path="res://scenes/levels/loop_trigger.tscn" id="12_trigger"]
+[ext_resource type="PackedScene" path="res://scenes/monster/silhouette.tscn" id="13_sil"]
+[ext_resource type="PackedScene" path="res://scenes/interactables/haunted_toy.tscn" id="14_toy"]
+[ext_resource type="PackedScene" path="res://scenes/levels/weeping_audio.tscn" id="15_weep"]
+[ext_resource type="PackedScene" path="res://scenes/monster/stalker.tscn" id="16_stalker"]
+[ext_resource type="PackedScene" path="res://scenes/interactables/battery_pickup.tscn" id="17_bat"]
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 1
+background_color = Color(0.015, 0.015, 0.02, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.05, 0.05, 0.07, 1)
+ambient_light_energy = 0.4
+fog_enabled = true
+fog_light_color = Color(0.07, 0.07, 0.09, 1)
+fog_density = 0.04
+
+[sub_resource type="StandardMaterial3D" id="Mat_Floor"]
+albedo_color = Color(0.18, 0.18, 0.2, 1)
+roughness = 0.75
+
+[sub_resource type="StandardMaterial3D" id="Mat_Wall"]
+albedo_color = Color(0.24, 0.26, 0.23, 1)
+roughness = 0.85
+
+[sub_resource type="StandardMaterial3D" id="Mat_Ceiling"]
+albedo_color = Color(0.15, 0.15, 0.16, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_Baseboard"]
+albedo_color = Color(0.12, 0.08, 0.06, 1)
+roughness = 0.7
+
+[sub_resource type="StandardMaterial3D" id="Mat_LampFixt"]
+albedo_color = Color(0.3, 0.3, 0.3, 1)
+metallic = 0.5
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="Mat_LampBulb"]
+albedo_color = Color(1, 0.95, 0.8, 1)
+emission_enabled = true
+emission = Color(1, 0.9, 0.75, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="StandardMaterial3D" id="Mat_ElevatorMetal"]
+albedo_color = Color(0.35, 0.38, 0.4, 1)
+metallic = 0.75
+roughness = 0.35
+
+[sub_resource type="BoxMesh" id="Mesh_CorridorFloor"]
+material = SubResource("Mat_Floor")
+size = Vector3(3.2, 0.2, 17)
+
+[sub_resource type="BoxShape3D" id="Shape_CorridorFloor"]
+size = Vector3(3.2, 0.2, 17)
+
+[sub_resource type="BoxMesh" id="Mesh_CorridorCeiling"]
+material = SubResource("Mat_Ceiling")
+size = Vector3(3.2, 0.2, 17)
+
+[sub_resource type="BoxShape3D" id="Shape_CorridorCeiling"]
+size = Vector3(3.2, 0.2, 17)
+
+[sub_resource type="BoxMesh" id="Mesh_LeftWall"]
+material = SubResource("Mat_Wall")
+size = Vector3(0.2, 2.8, 17)
+
+[sub_resource type="BoxShape3D" id="Shape_LeftWall"]
+size = Vector3(0.2, 2.8, 17)
+
+[sub_resource type="BoxMesh" id="Mesh_BackWall"]
+material = SubResource("Mat_Wall")
+size = Vector3(3.2, 2.8, 0.2)
+
+[sub_resource type="BoxShape3D" id="Shape_BackWall"]
+size = Vector3(3.2, 2.8, 0.2)
+
+[sub_resource type="BoxMesh" id="Mesh_LampFixture"]
+material = SubResource("Mat_LampFixt")
+size = Vector3(0.3, 0.08, 0.8)
+
+[sub_resource type="BoxMesh" id="Mesh_LampBulb"]
+material = SubResource("Mat_LampBulb")
+size = Vector3(0.18, 0.04, 0.7)
+
+[sub_resource type="BoxMesh" id="Mesh_SideRoomFloor"]
+material = SubResource("Mat_Floor")
+size = Vector3(3.6, 0.2, 4.2)
+
+[sub_resource type="BoxShape3D" id="Shape_SideRoomFloor"]
+size = Vector3(3.6, 0.2, 4.2)
+
+[sub_resource type="BoxMesh" id="Mesh_SideRoomCeiling"]
+material = SubResource("Mat_Ceiling")
+size = Vector3(3.6, 0.2, 4.2)
+
+[sub_resource type="BoxShape3D" id="Shape_SideRoomCeiling"]
+size = Vector3(3.6, 0.2, 4.2)
+
+[sub_resource type="BoxMesh" id="Mesh_SideRoomNorthSouthWall"]
+material = SubResource("Mat_Wall")
+size = Vector3(3.6, 2.8, 0.2)
+
+[sub_resource type="BoxShape3D" id="Shape_SideRoomNorthSouthWall"]
+size = Vector3(3.6, 2.8, 0.2)
+
+[sub_resource type="BoxMesh" id="Mesh_SideRoomEastWall"]
+material = SubResource("Mat_Wall")
+size = Vector3(0.2, 2.8, 4.2)
+
+[sub_resource type="BoxShape3D" id="Shape_SideRoomEastWall"]
+size = Vector3(0.2, 2.8, 4.2)
+
+[sub_resource type="BoxMesh" id="Mesh_DoorJambNorth"]
+material = SubResource("Mat_Wall")
+size = Vector3(0.2, 2.8, 1.7)
+
+[sub_resource type="BoxShape3D" id="Shape_DoorJambNorth"]
+size = Vector3(0.2, 2.8, 1.7)
+
+[sub_resource type="BoxMesh" id="Mesh_DoorJambSouth"]
+material = SubResource("Mat_Wall")
+size = Vector3(0.2, 2.8, 1.3)
+
+[sub_resource type="BoxShape3D" id="Shape_DoorJambSouth"]
+size = Vector3(0.2, 2.8, 1.3)
+
+[sub_resource type="BoxMesh" id="Mesh_DoorHeader"]
+material = SubResource("Mat_Wall")
+size = Vector3(0.2, 0.6, 1.2)
+
+[sub_resource type="BoxShape3D" id="Shape_DoorHeader"]
+size = Vector3(0.2, 0.6, 1.2)
+
+[sub_resource type="BoxMesh" id="Mesh_RightWallBackNew"]
+material = SubResource("Mat_Wall")
+size = Vector3(0.2, 2.8, 6.5)
+
+[sub_resource type="BoxShape3D" id="Shape_RightWallBackNew"]
+size = Vector3(0.2, 2.8, 6.5)
+
+[sub_resource type="BoxMesh" id="Mesh_RightWallFrontNew"]
+material = SubResource("Mat_Wall")
+size = Vector3(0.2, 2.8, 6.3)
+
+[sub_resource type="BoxShape3D" id="Shape_RightWallFrontNew"]
+size = Vector3(0.2, 2.8, 6.3)
+
+
+[sub_resource type="StandardMaterial3D" id="Mat_Void"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="Mesh_Void"]
+material = SubResource("Mat_Void")
+size = Vector3(4, 4, 4)
+
+[sub_resource type="BoxShape3D" id="Shape_VoidFloor"]
+size = Vector3(4, 0.2, 4)
+
+[node name="TestLevel" type="Node3D"]
+script = ExtResource("1_level")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." groups=["world_environment"]]
+environment = SubResource("Environment_1")
+
+[node name="Geometry" type="Node3D" parent="."]
+
+[node name="CorridorFloor" type="StaticBody3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, -1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/CorridorFloor"]
+mesh = SubResource("Mesh_CorridorFloor")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/CorridorFloor"]
+shape = SubResource("Shape_CorridorFloor")
+
+[node name="CorridorCeiling" type="StaticBody3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, -1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/CorridorCeiling"]
+mesh = SubResource("Mesh_CorridorCeiling")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/CorridorCeiling"]
+shape = SubResource("Shape_CorridorCeiling")
+
+[node name="LeftWall" type="StaticBody3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6, 1.4, -1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/LeftWall"]
+mesh = SubResource("Mesh_LeftWall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/LeftWall"]
+shape = SubResource("Shape_LeftWall")
+
+[node name="BackWall" type="StaticBody3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 7.5)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/BackWall"]
+mesh = SubResource("Mesh_BackWall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/BackWall"]
+shape = SubResource("Shape_BackWall")
+
+[node name="RightWallBack" type="StaticBody3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, 1.4, 4.25)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/RightWallBack"]
+mesh = SubResource("Mesh_RightWallBackNew")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/RightWallBack"]
+shape = SubResource("Shape_RightWallBackNew")
+
+[node name="RightWallFront" type="StaticBody3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, 1.4, -6.35)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/RightWallFront"]
+mesh = SubResource("Mesh_RightWallFrontNew")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/RightWallFront"]
+shape = SubResource("Shape_RightWallFrontNew")
+
+[node name="DoorJambNorth" type="StaticBody3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, 1.4, -2.35)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/DoorJambNorth"]
+mesh = SubResource("Mesh_DoorJambNorth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/DoorJambNorth"]
+shape = SubResource("Shape_DoorJambNorth")
+
+[node name="DoorJambSouth" type="StaticBody3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, 1.4, 0.35)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/DoorJambSouth"]
+mesh = SubResource("Mesh_DoorJambSouth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/DoorJambSouth"]
+shape = SubResource("Shape_DoorJambSouth")
+
+[node name="DoorHeader" type="StaticBody3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, 2.5, -0.9)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/DoorHeader"]
+mesh = SubResource("Mesh_DoorHeader")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/DoorHeader"]
+shape = SubResource("Shape_DoorHeader")
+
+[node name="Door47WallLeft" type="StaticBody3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.05, 1.4, -9.5)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/Door47WallLeft"]
+mesh = SubResource("Mesh_BackWall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Door47WallLeft"]
+shape = SubResource("Shape_BackWall")
+
+[node name="Door47WallRight" type="StaticBody3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05, 1.4, -9.5)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/Door47WallRight"]
+mesh = SubResource("Mesh_BackWall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Door47WallRight"]
+shape = SubResource("Shape_BackWall")
+
+[node name="Door47WallTop" type="StaticBody3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -9.5)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/Door47WallTop"]
+mesh = SubResource("Mesh_BackWall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Door47WallTop"]
+shape = SubResource("Shape_BackWall")
+
+[node name="SideRoom" type="Node3D" parent="Geometry"]
+
+[node name="RoomFloor" type="StaticBody3D" parent="Geometry/SideRoom"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4, -0.1, -1.1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/SideRoom/RoomFloor"]
+mesh = SubResource("Mesh_SideRoomFloor")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/SideRoom/RoomFloor"]
+shape = SubResource("Shape_SideRoomFloor")
+
+[node name="RoomCeiling" type="StaticBody3D" parent="Geometry/SideRoom"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4, 2.9, -1.1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/SideRoom/RoomCeiling"]
+mesh = SubResource("Mesh_SideRoomCeiling")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/SideRoom/RoomCeiling"]
+shape = SubResource("Shape_SideRoomCeiling")
+
+[node name="RoomEastWall" type="StaticBody3D" parent="Geometry/SideRoom"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2, 1.4, -1.1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/SideRoom/RoomEastWall"]
+mesh = SubResource("Mesh_SideRoomEastWall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/SideRoom/RoomEastWall"]
+shape = SubResource("Shape_SideRoomEastWall")
+
+[node name="RoomNorthWall" type="StaticBody3D" parent="Geometry/SideRoom"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4, 1.4, -3.2)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/SideRoom/RoomNorthWall"]
+mesh = SubResource("Mesh_SideRoomNorthSouthWall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/SideRoom/RoomNorthWall"]
+shape = SubResource("Shape_SideRoomNorthSouthWall")
+
+[node name="RoomSouthWall" type="StaticBody3D" parent="Geometry/SideRoom"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4, 1.4, 1.0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/SideRoom/RoomSouthWall"]
+mesh = SubResource("Mesh_SideRoomNorthSouthWall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/SideRoom/RoomSouthWall"]
+shape = SubResource("Shape_SideRoomNorthSouthWall")
+
+[node name="Desk" parent="Geometry/SideRoom" instance=ExtResource("9_desk")]
+transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 3.6, 0, -2.5)
+
+[node name="Chair" parent="Geometry/SideRoom" instance=ExtResource("10_chair")]
+transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 3.6, 0, -1.5)
+
+[node name="Cabinet" parent="Geometry/SideRoom" instance=ExtResource("11_cabinet")]
+transform = Transform3D(-3.71547e-08, 0, 0.85, 0, 0.85, 0, -0.85, 0, -3.71547e-08, 4.8, 0, 0.1)
+
+
+[node name="ApartmentVoid" type="StaticBody3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -11.5)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/ApartmentVoid"]
+mesh = SubResource("Mesh_Void")
+
+[node name="VoidFloor" type="StaticBody3D" parent="Geometry/ApartmentVoid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.6, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/ApartmentVoid/VoidFloor"]
+shape = SubResource("Shape_VoidFloor")
+
+[node name="Doors" type="Node3D" parent="."]
+
+[node name="SideDoor" parent="Doors" instance=ExtResource("3_door")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.6, 0, -0.9)
+open_prompt = "Открыть подсобку"
+close_prompt = "Закрыть подсобку"
+
+[node name="Door47" parent="Doors" instance=ExtResource("3_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9.5)
+is_locked = true
+required_key_id = "key_47"
+locked_prompt = "Квартира 47 (Заперто)"
+unlock_prompt = "Открыть квартиру 47 ключом"
+
+[node name="Plaque47" type="Label3D" parent="Doors/Door47"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0.1)
+text = "47"
+font_size = 48
+outline_size = 4
+modulate = Color(0.85, 0.25, 0.25, 1)
+
+[node name="Door43" parent="Doors" instance=ExtResource("3_door")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1.5, 0, 3.5)
+is_locked = true
+locked_prompt = "Квартира 43 (Заперто изнутри)"
+
+[node name="Plaque43" type="Label3D" parent="Doors/Door43"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0.1)
+text = "43"
+font_size = 40
+outline_size = 3
+modulate = Color(0.7, 0.7, 0.75, 1)
+
+[node name="Door44" parent="Doors" instance=ExtResource("3_door")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.5, 0, 1.8)
+is_locked = true
+locked_prompt = "Квартира 44 (Заперто)"
+
+[node name="Plaque44" type="Label3D" parent="Doors/Door44"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0.1)
+text = "44"
+font_size = 40
+outline_size = 3
+modulate = Color(0.7, 0.7, 0.75, 1)
+
+[node name="Door45" parent="Doors" instance=ExtResource("3_door")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1.5, 0, -4.0)
+is_locked = true
+locked_prompt = "Квартира 45 (Заперто)"
+
+[node name="Plaque45" type="Label3D" parent="Doors/Door45"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0.1)
+text = "45"
+font_size = 40
+outline_size = 3
+modulate = Color(0.7, 0.7, 0.75, 1)
+
+[node name="Door46" parent="Doors" instance=ExtResource("3_door")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.5, 0, -7.0)
+is_locked = true
+locked_prompt = "Квартира 46 (Заперто)"
+
+[node name="Plaque46" type="Label3D" parent="Doors/Door46"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0.1)
+text = "46"
+font_size = 40
+outline_size = 3
+modulate = Color(0.7, 0.7, 0.75, 1)
+
+[node name="StairsDoor" parent="Doors" instance=ExtResource("3_door")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 7.4)
+is_locked = true
+locked_prompt = "Выход на лестницу (Заперто на засов)"
+
+[node name="StairsSign" type="Label3D" parent="Doors/StairsDoor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.35, 0.1)
+text = "ЛЕСТНИЦА / 4 ЭТАЖ"
+font_size = 24
+outline_size = 3
+modulate = Color(0.4, 0.8, 0.4, 1)
+
+[node name="Lighting" type="Node3D" parent="."]
+
+[node name="LampFixture1" type="MeshInstance3D" parent="Lighting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.76, 4)
+mesh = SubResource("Mesh_LampFixture")
+
+[node name="Bulb1" type="MeshInstance3D" parent="Lighting/LampFixture1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+mesh = SubResource("Mesh_LampBulb")
+
+[node name="CorridorLamp1" type="OmniLight3D" parent="Lighting" groups=["corridor_lights"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 4)
+light_color = Color(1, 0.88, 0.7, 1)
+light_energy = 1.2
+shadow_enabled = true
+omni_range = 8.0
+omni_attenuation = 1.3
+
+[node name="LampFixture2" type="MeshInstance3D" parent="Lighting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.76, -1)
+mesh = SubResource("Mesh_LampFixture")
+
+[node name="Bulb2" type="MeshInstance3D" parent="Lighting/LampFixture2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+mesh = SubResource("Mesh_LampBulb")
+
+[node name="CorridorLamp2" type="OmniLight3D" parent="Lighting" groups=["corridor_lights"] node_paths=PackedStringArray("emissive_mesh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, -1)
+light_color = Color(1, 0.85, 0.65, 1)
+light_energy = 1.0
+shadow_enabled = true
+omni_range = 8.0
+omni_attenuation = 1.3
+script = ExtResource("7_flicker")
+emissive_mesh = NodePath("../LampFixture2/Bulb2")
+
+[node name="FluorescentBuzz" type="AudioStreamPlayer3D" parent="Lighting/CorridorLamp2"]
+stream = ExtResource("8_buzz_audio")
+autoplay = true
+max_distance = 12.0
+bus = &"SFX"
+
+[node name="LampFixture3" type="MeshInstance3D" parent="Lighting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.76, -6.5)
+mesh = SubResource("Mesh_LampFixture")
+
+[node name="Bulb3" type="MeshInstance3D" parent="Lighting/LampFixture3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+mesh = SubResource("Mesh_LampBulb")
+
+[node name="CorridorLamp3" type="OmniLight3D" parent="Lighting" groups=["corridor_lights"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, -6.5)
+light_color = Color(0.85, 0.8, 0.7, 1)
+light_energy = 0.9
+shadow_enabled = true
+omni_range = 8.0
+omni_attenuation = 1.3
+
+[node name="SideRoomLamp" type="OmniLight3D" parent="Lighting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4, 2.5, -1.1)
+light_color = Color(1, 0.75, 0.5, 1)
+light_energy = 1.4
+shadow_enabled = true
+omni_range = 7.0
+omni_attenuation = 1.2
+
+[node name="Interactables" type="Node3D" parent="."]
+
+[node name="KeyPickup" parent="Interactables" instance=ExtResource("4_pickup")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6, 0.76, -2.1)
+item_data = ExtResource("5_key_res")
+
+[node name="BatteryPickup" parent="Interactables" instance=ExtResource("17_bat")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1, 0.76, -2.1)
+
+[node name="NoteOnWall" parent="Interactables" instance=ExtResource("6_note")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.48, 1.5, 2)
+prompt_message = "Прочитать записку"
+note_text = "«Дверь 47 заперта. Ключ лежит в подсобке на столе. Не шуми...»"
+
+[node name="ControlGuide" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 7.35)
+text = "WASD — Движение | SHIFT — Бег | CTRL — Присесть
+E — Взаимодействие | F — Фонарик | TAB — Инвентарь | ESC — Меню"
+font_size = 20
+outline_size = 2
+modulate = Color(0.8, 0.8, 0.85, 0.9)
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 5)
+
+[node name="LoopTriggers" type="Node3D" parent="."]
+
+[node name="LoopTriggerStairs" parent="LoopTriggers" instance=ExtResource("12_trigger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6.9)
+use_custom_pos = true
+custom_teleport_pos = Vector3(0, 0.05, 5)
+
+[node name="LoopTriggerApartment" parent="LoopTriggers" instance=ExtResource("12_trigger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10.2)
+use_custom_pos = true
+custom_teleport_pos = Vector3(0, 0.05, 5)
+
+[node name="LoopEntities" type="Node3D" parent="."]
+
+[node name="Silhouette" parent="LoopEntities" instance=ExtResource("13_sil")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+visible = false
+
+[node name="HauntedToy" parent="LoopEntities" instance=ExtResource("14_toy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+visible = false
+
+[node name="WeepingAudio" parent="LoopEntities" instance=ExtResource("15_weep")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2, 1.2, -4)
+visible = false
+
+[node name="Stalker" parent="LoopEntities" instance=ExtResource("16_stalker")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.5)
+visible = false
+process_mode = 4

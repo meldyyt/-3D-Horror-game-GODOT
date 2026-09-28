@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="LoopData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/events/loop_data.gd" id="1_script"]
+[ext_resource type="AudioStream" path="res://assets/audio/ambient_corridor_loop.wav" id="2_amb"]
+
+[resource]
+script = ExtResource("1_script")
+loop_number = 1
+loop_title = "Обычный этаж"
+notification_text = "4 этаж. Моя квартира — 47."
+ambient_stream = ExtResource("2_amb")
+ambient_volume_db = -8.0
+light_energy_multiplier = 1.0
+fog_density = 0.035
+fog_color = Color(0.07, 0.07, 0.09, 1)
+show_groups = []
+hide_groups = ["loop_haunted_objects", "loop_silhouette", "loop_weeping_audio", "loop_stalker"]
+open_door_names = []
+close_door_names = ["SideDoor"]
+lock_door_names = ["Door47"]
+custom_event_id = ""
